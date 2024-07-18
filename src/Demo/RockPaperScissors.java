@@ -25,7 +25,7 @@ public class RockPaperScissors {
     generateHands();
     
     // Should only loop once
-    while ( player.hand.size() + bot.hand.size() < handSize*2){
+    while ( player.hand.size() + bot.hand.size() >= handSize*2){
       System.out.println("Your hand is: " + player.hand);
       System.out.println("Select the index of the card to play, options: " + getListOfArrayListIndexes(player.hand));
 
@@ -71,15 +71,19 @@ public class RockPaperScissors {
    */
   private void generateHands(){
     for (int i = 0; i < handSize; i++) {
-      System.out.println("Select which 3 cards to add to the deck\nOn card " + i+1 + " of " + handSize);
-      try {
-        int selectedIndex = scanner.nextInt() - 1;
-        startingDeck.add(
-            Arrays.asList(CARDS.values()).get(selectedIndex)
-        );
-      } catch (IndexOutOfBoundsException | InputMismatchException e){
-        System.out.println("Illegal input");
-        continue;
+      while (true) {
+        System.out.println("Select 3 cards to add to the deck\nOn card " + (i + 1) + " of " + handSize);
+        System.out.println(Arrays.asList(CARDS.values()));
+        try {
+          int selectedIndex = scanner.nextInt() - 1;
+          startingDeck.add(
+                  Arrays.asList(CARDS.values()).get(selectedIndex)
+          );
+        } catch (IndexOutOfBoundsException | InputMismatchException e) {
+          System.out.println("Illegal input");
+          continue;
+        }
+        break;
       }
 
       // Bot adds random card
@@ -103,7 +107,7 @@ public class RockPaperScissors {
   }
 
   /**
-   * Represents cards in a deck that a player u
+   * Represents cards in a deck that a player use
    */
   public enum CARDS{
     ROCK, PAPER, SCISSORS
