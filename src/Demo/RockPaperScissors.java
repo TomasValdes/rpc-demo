@@ -29,10 +29,10 @@ public class RockPaperScissors {
       System.out.println("Your hand is: " + player.hand);
       System.out.println("Select the index of the card to play, options: " + getListOfArrayListIndexes(player.hand));
 
-      int selectedIndex = scanner.nextInt() - 1;
       try {
+        int selectedIndex = scanner.nextInt() - 1;
         player.move = player.hand.remove(selectedIndex);
-      } catch (IndexOutOfBoundsException e){
+      } catch (IndexOutOfBoundsException | InputMismatchException e){
         System.out.println("Illegal input");
         continue;
       }
@@ -71,23 +71,25 @@ public class RockPaperScissors {
    */
   private void generateHands(){
     for (int i = 0; i < handSize; i++) {
-      System.out.println("Select the index of the card to play, opt");
-      int selectedIndex = scanner.nextInt() - 1;
+      System.out.println("Select which 3 cards to add to the deck\nOn card " + i+1 + " of " + handSize);
       try {
+        int selectedIndex = scanner.nextInt() - 1;
         startingDeck.add(
-            Arrays.asList(CARDS.values()).get()
+            Arrays.asList(CARDS.values()).get(selectedIndex)
         );
-      } catch (IndexOutOfBoundsException e){
+      } catch (IndexOutOfBoundsException | InputMismatchException e){
         System.out.println("Illegal input");
         continue;
       }
 
+      // Bot adds random card
       startingDeck.add(startingDeck.get(random.nextInt(startingDeck.size())));
     }
 
     // Ensure cards are randomized before handing out
     Collections.shuffle(startingDeck);
 
+    // Distribute cards to players
     for (int i = 0; i < handSize; i++) {
       player.hand.add(startingDeck.pop());
       bot.hand.add(startingDeck.pop());
@@ -100,6 +102,9 @@ public class RockPaperScissors {
         .collect(Collectors.toList());
   }
 
+  /**
+   * Represents cards in a deck that a player u
+   */
   public enum CARDS{
     ROCK, PAPER, SCISSORS
   }
