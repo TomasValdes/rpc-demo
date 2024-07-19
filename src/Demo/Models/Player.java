@@ -9,6 +9,8 @@ public class Player {
   public ArrayList<RockPaperScissors.CARDS> hand;
   public int score = 0;
   public RockPaperScissors.CARDS move;
+  public RockPaperScissors.CARDS winningCard;
+
   public Player(ArrayList<RockPaperScissors.CARDS> playerDeck){
     this.hand = playerDeck;
   }
