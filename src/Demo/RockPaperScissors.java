@@ -10,8 +10,8 @@ public class RockPaperScissors {
   private final ArrayList<CARDS> listOfAllCardTypes =
       new ArrayList<>(Arrays.asList(CARDS.ROCK, CARDS.PAPER, CARDS.SCISSORS));
   private final Scanner scanner = new Scanner(System.in);
-  private final int handSize = 3;
-  private final int cardsToReveal = 2;
+  private final int HAND_SIZE = 3;
+  private final int CARDS_TO_REVEAL = 2;
   private final Random random = new Random();
   private Player player;
   private Player bot;
@@ -71,20 +71,20 @@ public class RockPaperScissors {
 
       if (revealTopCard) {
         revealTopCard = false;
-        System.out.println("The top " + cardsToReveal + " cards of the deck are " + currentDeck.subList(0, cardsToReveal));
+        System.out.println("The top " + CARDS_TO_REVEAL + " cards of the deck are " + currentDeck.subList(0, CARDS_TO_REVEAL));
       }
     }
 
     System.out.println("Score is " + player.score + "-" + bot.score);
 
     while (true) {
-      System.out.println("Press 1 to play again, 2 to quite");
+      System.out.println("Press 1 to play again, 2 to quit");
       try {
         int selectedIndex = scanner.nextInt() - 1;
         if (selectedIndex == 0)
           playGame();
         break;
-      } catch (IndexOutOfBoundsException | InputMismatchException e) {
+      } catch (IndexOutOfBoundsException | InputMismatchException _ignore) {
         System.out.println("Illegal input");
       }
     }
@@ -94,15 +94,15 @@ public class RockPaperScissors {
    * Create player hands
    */
   private void generateDeck() {
-    for (int i = 0; i < handSize; i++) {
+    for (int i = 0; i < HAND_SIZE; i++) {
       while (true) {
         System.out
-            .println("Select 3 cards to add to the deck\nOn card " + (i + 1) + " of " + handSize);
+            .println("Select 3 cards to add to the deck\nOn card " + (i + 1) + " of " + HAND_SIZE);
         System.out.println(listOfAllCardTypes);
         try {
-          int selectedIndex = scanner.nextInt() - 1;
+          int selectedIndex = scanner.nextInt() - 1; 
           startingDeck.add(listOfAllCardTypes.get(selectedIndex));
-        } catch (IndexOutOfBoundsException | InputMismatchException e) {
+        } catch (IndexOutOfBoundsException | InputMismatchException _ignore) {
           System.out.println("Illegal input");
           continue;
         }
@@ -141,7 +141,7 @@ public class RockPaperScissors {
           continue;
         }
         player.winningCard = listOfAllCardTypes.get(selectedIndex);
-      } catch (IndexOutOfBoundsException | InputMismatchException e) {
+      } catch (IndexOutOfBoundsException | InputMismatchException _ignore) {
         System.out.println("Illegal input");
       }
     }
@@ -155,7 +155,7 @@ public class RockPaperScissors {
     try {
       int selectedIndex = scanner.nextInt() - 1;
       player.move = player.hand.remove(selectedIndex);
-    } catch (IndexOutOfBoundsException | InputMismatchException e) {
+    } catch (IndexOutOfBoundsException | InputMismatchException _ignore) {
       System.out.println("Illegal input");
       playCard();
     }
@@ -168,7 +168,7 @@ public class RockPaperScissors {
     currentDeck = new LinkedList<>(startingDeck);
 
     // Distribute cards to players
-    for (int i = 0; i < handSize; i++) {
+    for (int i = 0; i < HAND_SIZE; i++) {
       player.hand.add(currentDeck.pop());
       bot.hand.add(currentDeck.pop());
     }
